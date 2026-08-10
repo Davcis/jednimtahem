@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jedním Tahem — kavárna ve Zlíně</title>
+<meta name="description" content="Jedním Tahem — kavárna ve Zlíně. Výběrová káva, domácí snídaně a místo, kde se dobře sedí.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#000000;
+  --panel:#0c0c0c;
+  --panel-2:#161616;
+  --line:#262626;
+  --white:#ffffff;
+  --grey:#a3a3a3;
+  --grey-2:#7e7e7e;
+  --grey-3:#b4b4b4;
+  --footer-bg:#161616;
+  --pink:#ff14b6;
+  --lime:#d8ae84;
+  --section:96px;
+  --section-sm:56px;
+  --maxw:1360px;
+  --gut:24px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --head:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  --body:"Poppins",Helvetica,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px;-webkit-text-size-adjust:100%}
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:var(--body);
+  font-weight:300;
+  line-height:1.9;
+  font-size:16px;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--lime);color:#000}
+:focus-visible{outline:2px solid var(--lime);outline-offset:3px}
+
+h1,h2,h3,h4,.head{font-family:var(--head);font-weight:800;text-transform:uppercase;line-height:1.04;letter-spacing:.005em}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--gut)}
+.section{padding:var(--section-sm) 0}
+@media(min-width:720px){.section{padding:var(--section) 0}}
+.section-title{font-size:30px;text-align:center;margin-bottom:38px}
+@media(min-width:720px){.section-title{font-size:44px;margin-bottom:54px}}
+.eyebrow{font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.22em;font-size:12px;color:var(--lime)}
+.muted{color:var(--grey-3)}
+.center{text-align:center}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5em;
+  font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.04em;
+  font-size:13px;padding:15px 40px;border:1px solid var(--white);
+  background:transparent;color:var(--white);cursor:pointer;
+  transition:background .35s var(--ease),color .35s var(--ease),transform .25s var(--ease);
+}
+.btn:hover{background:var(--white);color:#000}
+.btn:active{transform:translateY(1px)}
+.btn--solid{background:var(--white);color:#000}
+.btn--solid:hover{background:var(--lime);border-color:var(--lime);color:#000}
+.btn--dark{border-color:#000;color:#000}
+.btn--dark:hover{background:#000;color:#fff}
+@media(min-width:720px){.btn{font-size:14px;padding:16px 48px}}
+
+/* ---------- header ---------- */
+.site-header{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px var(--gut);
+  transition:background .4s var(--ease),padding .4s var(--ease);
+}
+.site-header.scrolled{background:#000;padding:12px var(--gut)}
+.brand{display:flex;align-items:center;gap:13px;font-family:var(--head);font-weight:800;text-transform:uppercase;letter-spacing:.03em;font-size:16px;white-space:nowrap}
+.brand svg{width:44px;height:44px;flex:none}
+.nav-toggle{display:flex;align-items:center;gap:10px;background:none;border:none;color:#fff;font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.04em;font-size:13px;cursor:pointer}
+.nav-toggle .bars{display:inline-flex;flex-direction:column;gap:5px;width:26px}
+.nav-toggle .bars i{height:2px;background:#fff;display:block;transition:transform .3s var(--ease),opacity .3s}
+body.menu-open .nav-toggle .bars i:nth-child(1){transform:translateY(7px) rotate(45deg)}
+body.menu-open .nav-toggle .bars i:nth-child(2){opacity:0}
+body.menu-open .nav-toggle .bars i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* overlay menu */
+.overlay{
+  position:fixed;inset:0;z-index:150;background:#000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s;
+}
+body.menu-open .overlay{opacity:1;visibility:visible}
+.overlay a{font-family:var(--head);font-weight:800;text-transform:uppercase;font-size:26px;line-height:1.55;color:#fff;transition:color .25s;text-align:center;padding:0 16px}
+.overlay a:hover{color:var(--lime)}
+@media(min-width:720px){.overlay a{font-size:54px}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center;overflow:hidden;background:var(--black)}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center}
+/* mobile: full-bleed photo with vertical darkening for legibility */
+.hero-veil{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,.5) 45%,rgba(0,0,0,.9) 100%)}
+/* desktop: photo sits in a taller right column (more of the original shows),
+   left edge dissolves into the brand black so it connects seamlessly */
+@media(min-width:720px){
+  .hero-bg{left:auto;right:0;width:58%}
+  .hero-veil{background:
+    linear-gradient(90deg,var(--black) 0%,var(--black) 41%,rgba(0,0,0,.82) 47%,rgba(0,0,0,.38) 55%,rgba(0,0,0,0) 67%),
+    linear-gradient(180deg,rgba(0,0,0,0) 72%,rgba(0,0,0,.5) 100%)}
+}
+.hero-inner{position:relative;z-index:2;padding:120px var(--gut) 96px;max-width:var(--maxw);margin:0 auto;width:100%;text-align:left}
+.hero-content{max-width:600px}
+.hero-badge{width:104px;height:104px;margin:0 0 26px;display:flex;align-items:center;justify-content:center}
+.hero-badge svg{width:100%;height:100%;filter:drop-shadow(0 4px 24px rgba(0,0,0,.5))}
+.hero h1{font-size:36px;letter-spacing:.01em;text-shadow:0 2px 30px rgba(0,0,0,.5)}
+@media(min-width:720px){.hero h1{font-size:62px}}
+.hero-lead{margin-top:18px;max-width:430px;color:#d9d9d9;font-size:16px}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;justify-content:flex-start;margin-top:34px}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;font-family:var(--head);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--grey-3);display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-hint .line{width:1px;height:38px;background:linear-gradient(#fff,transparent);animation:drop 1.8s var(--ease) infinite}
+@keyframes drop{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.1%{transform-origin:bottom}100%{transform:scaleY(.2);transform-origin:bottom}}
+
+/* ---------- about ---------- */
+.about{max-width:760px;margin:0 auto;text-align:center}
+.about p{margin-bottom:18px;color:#dcdcdc;font-size:17px}
+.about .btn{margin-top:14px}
+.about-grid{display:grid;gap:32px;align-items:center}
+@media(min-width:860px){.about-grid{grid-template-columns:0.82fr 1fr;gap:60px}}
+.about-media{overflow:hidden;background:var(--panel-2)}
+.about-media img{width:100%;height:100%;object-fit:cover;aspect-ratio:4/5}
+.about-copy .eyebrow{display:block;margin-bottom:14px;color:var(--lime)}
+.about-copy h2{font-size:30px;margin-bottom:22px;line-height:1.04}
+@media(min-width:720px){.about-copy h2{font-size:42px}}
+.about-copy p{margin-bottom:18px;color:#dcdcdc;font-size:17px}
+
+/* ---------- news slider ---------- */
+.slider{position:relative}
+.slides{display:grid;grid-auto-flow:column;grid-auto-columns:84%;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:10px;scrollbar-width:none}
+.slides::-webkit-scrollbar{display:none}
+@media(min-width:720px){.slides{grid-auto-columns:calc((100% - 36px)/3)}}
+.news-card{scroll-snap-align:start}
+.news-card .ph{aspect-ratio:4/3;overflow:hidden;background:var(--panel-2)}
+.news-card .ph img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.news-card:hover .ph img{transform:scale(1.05)}
+.news-card h4{font-size:14px;margin-top:14px;letter-spacing:.06em}
+.slider-nav{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.slider-nav button{width:42px;height:42px;border:1px solid var(--line);background:transparent;color:#fff;cursor:pointer;font-size:18px;transition:background .3s,border-color .3s}
+.slider-nav button:hover{background:#fff;color:#000;border-color:#fff}
+
+/* ---------- menu accordion ---------- */
+.accordion{max-width:920px;margin:0 auto;border-top:1px solid var(--line)}
+.acc-item{border-bottom:1px solid var(--line)}
+.acc-head{width:100%;background:none;border:none;color:#fff;cursor:pointer;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:24px 6px;text-align:left;font-family:var(--head);font-weight:700;text-transform:uppercase;font-size:20px;letter-spacing:.02em}
+@media(min-width:720px){.acc-head{font-size:24px;padding:26px 6px}}
+.acc-head .ic{flex:none;width:22px;height:22px;position:relative;transition:transform .35s var(--ease)}
+.acc-head .ic::before,.acc-head .ic::after{content:"";position:absolute;background:#fff;left:50%;top:50%;transform:translate(-50%,-50%)}
+.acc-head .ic::before{width:22px;height:2px}
+.acc-head .ic::after{width:2px;height:22px;transition:transform .35s var(--ease)}
+.acc-item.open .acc-head .ic::after{transform:translate(-50%,-50%) scaleY(0)}
+.acc-item.open .acc-head{color:var(--lime)}
+.acc-item.open .acc-head .ic::before{background:var(--lime)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .45s var(--ease)}
+.acc-body-inner{padding:0 6px 26px}
+.menu-row{display:flex;align-items:baseline;gap:14px;padding:11px 0;border-top:1px dashed #222}
+.menu-row:first-child{border-top:none}
+.menu-row .name{font-weight:500;color:#fff}
+.menu-row .dots{flex:1;border-bottom:1px dotted #3a3a3a;transform:translateY(-4px)}
+.menu-row .price{font-family:var(--head);font-weight:700;color:var(--lime);white-space:nowrap}
+.menu-row .desc{display:block;font-size:13px;color:var(--grey);font-weight:300;line-height:1.6}
+.menu-foot{text-align:center;margin-top:42px}
+
+/* ---------- eshop (pink) ---------- */
+.eshop{background:var(--pink);color:#000}
+.eshop .eyebrow{color:#000}
+.eshop-grid{display:grid;gap:30px;align-items:center}
+@media(min-width:860px){.eshop-grid{grid-template-columns:1fr 1fr;gap:54px}}
+.eshop h2{color:#000;font-size:30px;margin-bottom:0}
+@media(min-width:720px){.eshop h2{font-size:46px}}
+.eshop .imgs{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.eshop .imgs img{aspect-ratio:3/4;object-fit:cover;width:100%}
+.eshop-copy h3{color:#000;font-size:20px;margin-bottom:14px}
+.eshop-copy p{color:#1a1a1a;margin-bottom:24px;font-weight:400}
+
+/* ---------- split feature ---------- */
+.split{display:grid;gap:30px;align-items:center}
+@media(min-width:860px){.split{grid-template-columns:1fr 1fr;gap:60px}}
+.split.rev .split-media{order:2}
+.split-media{aspect-ratio:4/3;overflow:hidden;background:var(--panel-2)}
+.split-media img{width:100%;height:100%;object-fit:cover}
+.split h2{font-size:28px;margin-bottom:18px}
+@media(min-width:720px){.split h2{font-size:40px}}
+.split h4{font-size:15px;letter-spacing:.04em;margin-bottom:14px;color:var(--grey-3)}
+.split p{color:#cfcfcf;margin-bottom:24px}
+
+/* ---------- program ---------- */
+.program{max-width:760px;margin:0 auto}
+.prog-row{display:grid;grid-template-columns:90px 1fr;gap:18px;padding:18px 0;border-top:1px solid var(--line);align-items:baseline}
+.prog-row:last-child{border-bottom:1px solid var(--line)}
+.prog-row .date{font-family:var(--head);font-weight:700;color:var(--lime);font-size:15px}
+.prog-row .ev{font-weight:400}
+.prog-row .ev b{font-weight:600;text-transform:uppercase;font-family:var(--head);letter-spacing:.02em}
+@media(min-width:720px){.prog-row{grid-template-columns:130px 1fr}}
+
+/* ---------- updates / aktuality ---------- */
+.updates{max-width:960px;margin:0 auto;border-top:1px solid var(--line)}
+.update{display:grid;grid-template-columns:1fr;gap:14px;padding:22px 4px;border-bottom:1px solid var(--line)}
+@media(min-width:680px){.update{grid-template-columns:128px 1fr 210px;gap:28px;align-items:center}}
+.u-tag{justify-self:start;align-self:start;font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--lime);border:1px solid rgba(216,174,132,.45);padding:5px 11px}
+.u-body h4{font-size:19px;letter-spacing:.02em;margin-bottom:6px}
+.u-body p{color:var(--grey-3);font-size:15px;margin:0}
+.u-body p time{color:#fff;font-weight:500}
+.u-media{overflow:hidden;background:var(--panel-2);aspect-ratio:3/2}
+.u-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+.update:hover .u-media img{transform:scale(1.05)}
+
+/* social links inside contact */
+.contact-soc{display:flex;gap:10px;margin-top:4px}
+.contact-soc a{width:42px;height:42px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:#fff;transition:background .25s,color .25s,border-color .25s}
+.contact-soc a:hover{background:var(--lime);color:#000;border-color:var(--lime)}
+.contact .day{color:var(--lime);font-weight:500}
+
+/* ---------- reservation / contact form ---------- */
+.form-wrap{max-width:760px;margin:0 auto;color-scheme:dark}
+.form-grid{display:grid;grid-template-columns:1fr;gap:18px}
+@media(min-width:620px){.form-grid{grid-template-columns:1fr 1fr}}
+.field{display:flex;flex-direction:column;gap:8px}
+.field.full{grid-column:1/-1}
+.field label{font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--grey-3)}
+.field label .req{color:var(--lime)}
+.field input,.field select,.field textarea{background:#0c0c0c;border:1px solid var(--line);color:#fff;padding:13px 15px;font-family:var(--body);font-size:15px;width:100%;transition:border-color .25s var(--ease),background .25s}
+.field select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23b4b4b4' stroke-width='2'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;padding-right:38px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--lime);background:#000}
+.field input::placeholder,.field textarea::placeholder{color:#5e5e5e}
+.field textarea{resize:vertical;min-height:120px}
+.form-consent{grid-column:1/-1;display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.6;color:var(--grey-3);cursor:pointer}
+.form-consent input{flex:none;margin-top:3px;width:16px;height:16px;accent-color:var(--lime)}
+.form-consent a{color:#fff;text-decoration:underline}
+.form-foot{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:18px;align-items:center}
+.form-note{font-size:14px;color:var(--lime);opacity:0;transform:translateY(4px);transition:opacity .35s,transform .35s}
+.form-note.show{opacity:1;transform:none}
+.contact-soc svg{width:18px;height:18px}
+
+/* ---------- map ---------- */
+.map{max-width:680px;margin:0 auto;text-align:center}
+.map p{color:#cfcfcf;margin-bottom:26px}
+
+/* ---------- gallery (masonry) ---------- */
+.gallery{columns:2;column-gap:14px}
+@media(min-width:760px){.gallery{columns:3;column-gap:18px}}
+.gallery figure{break-inside:avoid;margin:0 0 14px;position:relative;overflow:hidden;background:var(--panel-2)}
+@media(min-width:760px){.gallery figure{margin-bottom:18px}}
+.gallery figure img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .7s var(--ease)}
+.gallery figure::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.55),transparent 55%);opacity:0;transition:opacity .4s}
+.gallery figure:hover img{transform:scale(1.06)}
+.gallery figure:hover::after{opacity:1}
+.gallery figcaption{position:absolute;left:0;bottom:0;z-index:2;padding:14px 16px;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:12px;color:#fff;opacity:0;transform:translateY(8px);transition:opacity .4s,transform .4s}
+.gallery figure:hover figcaption{opacity:1;transform:none}
+.gallery .ar-tall{aspect-ratio:3/4}
+.gallery .ar-port{aspect-ratio:4/5}
+.gallery .ar-sq{aspect-ratio:1/1}
+.gallery .ar-wide{aspect-ratio:4/3}
+
+/* ---------- contact ---------- */
+.contact{display:grid;gap:34px}
+@media(min-width:860px){.contact{grid-template-columns:1fr 1fr;gap:56px;align-items:stretch}}
+.contact-list{display:flex;flex-direction:column;gap:24px}
+.ci-label{font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.16em;font-size:11px;color:var(--lime);margin-bottom:6px}
+.contact .big{font-size:22px;font-family:var(--head);font-weight:700;text-transform:uppercase;color:#fff;line-height:1.25;margin-bottom:8px}
+.contact p{color:#cfcfcf}
+.contact a.link{color:#fff;border-bottom:1px solid #444;transition:border-color .25s}
+.contact a.link:hover{border-color:#fff}
+.contact-map{min-height:280px;border:1px solid var(--line);overflow:hidden;background:var(--panel-2)}
+.contact-map iframe{width:100%;height:100%;min-height:280px;border:0;filter:grayscale(1) invert(.92) contrast(.85) brightness(.95)}
+
+/* ---------- sustainability banner ---------- */
+.banner{position:relative;text-align:center;overflow:hidden}
+.banner-bg{position:absolute;inset:0;z-index:0}
+.banner-bg img{width:100%;height:100%;object-fit:cover;filter:blur(2px) brightness(.4)}
+.banner-bg::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.5)}
+.banner .wrap{position:relative;z-index:2;padding:30px 0}
+.banner h2{font-size:30px;margin-bottom:26px}
+@media(min-width:720px){.banner h2{font-size:46px}}
+.banner-cta{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+
+/* ---------- newsletter ---------- */
+.news-signup{border-top:1px solid var(--line)}
+.news-signup h3{font-size:18px;letter-spacing:.04em;margin-bottom:24px}
+.nl-form{display:flex;flex-wrap:wrap;gap:0;max-width:560px;margin-bottom:18px}
+.nl-form input{flex:1;min-width:200px;background:#000;border:1px solid #fff;color:#fff;padding:14px 18px;font-family:var(--body);font-size:15px}
+.nl-form input::placeholder{color:#777}
+.nl-form button{border-left:none}
+.nl-fine{font-size:13px;color:var(--grey-2);max-width:620px}
+.nl-fine a{color:#fff;text-decoration:underline}
+
+/* ---------- footer ---------- */
+.site-footer{background:var(--black);color:var(--grey-3);font-size:14px;padding:52px 0 30px;border-top:1px solid #1c1c1c}
+.foot-top{display:flex;flex-direction:column;align-items:center;gap:26px;text-align:center;padding-bottom:34px;border-bottom:1px solid #2a2a2a}
+@media(min-width:820px){.foot-top{flex-direction:row;justify-content:space-between;text-align:left}}
+.foot-brand{display:flex;align-items:center;gap:12px;font-family:var(--head);font-weight:800;text-transform:uppercase;letter-spacing:.03em;font-size:18px;color:#fff}
+.foot-brand svg{width:40px;height:40px;flex:none}
+.foot-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px}
+.foot-nav a{color:var(--grey-2);font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.04em;font-size:13px;transition:color .25s}
+.foot-nav a:hover{color:var(--lime)}
+.site-footer a{transition:color .25s}
+.foot-soc{display:flex;gap:12px}
+.foot-soc a{width:40px;height:40px;border:1px solid #333;display:flex;align-items:center;justify-content:center;color:#fff}
+.foot-soc a:hover{background:var(--lime);color:#000;border-color:var(--lime)}
+.foot-soc svg{width:16px;height:16px}
+.foot-base{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;padding-top:24px;color:#6a6a6a;font-size:12px}
+@media(min-width:820px){.foot-base{flex-direction:row;justify-content:space-between;text-align:left}}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+
+/* scroll to top */
+.to-top{position:fixed;right:22px;bottom:22px;z-index:120;width:48px;height:48px;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.55);border:1px solid var(--line);color:#fff;cursor:pointer;
+  opacity:0;visibility:hidden;transform:translateY(12px);
+  transition:opacity .35s var(--ease),transform .35s var(--ease),background .3s,border-color .3s,color .3s;backdrop-filter:blur(6px)}
+.to-top.show{opacity:1;visibility:visible;transform:none}
+.to-top:hover{background:var(--lime);border-color:var(--lime);color:#000}
+.to-top:active{transform:translateY(1px)}
+.to-top svg{width:20px;height:20px}
+@media(min-width:720px){.to-top{right:30px;bottom:30px;width:52px;height:52px}}
+</style>
+</head>
+<body>
+
+<!-- "Jedním Tahem" one-line mark, reused -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 1000 1000">
+    <path d="M506.003,140l214.123,214.123l0,427.877l-431.126,0l0,-431l217.003,-211Z"
+      fill="none" stroke="currentColor" stroke-width="18.75" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M289,353l427.126,0l-427.126,429l427.126,0l-427.126,-429Z"
+      fill="none" stroke="currentColor" stroke-width="18.75" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<header class="site-header" id="header">
+  <a href="#top" class="brand" aria-label="Jedním Tahem">
+    <svg><use href="#logo"></use></svg>
+    <span>Jedním Tahem</span>
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+    <span id="navLabel">Menu</span>
+    <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+  </button>
+</header>
+
+<nav class="overlay" id="overlay" aria-label="Hlavní navigace">
+  <a href="#o-nas">O nás</a>
+  <a href="#galerie">Galerie</a>
+  <a href="#menu">Menu</a>
+  <a href="#novinky">Aktuality</a>
+  <a href="#kontakt">Kontakt</a>
+  <a href="#rezervace">Rezervace</a>
+</nav>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg">
+      <img src="img/hero.jpg" alt="Příprava espressa v kavárně Jedním Tahem">
+    </div>
+    <div class="hero-veil"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-badge"><svg><use href="#logo"></use></svg></div>
+        <h1>Káva nakreslená<br>jedním tahem</h1>
+        <p class="hero-lead">Výběrová kavárna ve Zlíně. Espresso, domácí snídaně a místo, kde se dobře sedí.</p>
+        <div class="hero-cta">
+          <a href="#galerie" class="btn">Prohlédni prostor</a>
+          <a href="#rezervace" class="btn">Rezervace</a>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint"><span>Scroll</span><span class="line"></span></div>
+  </section>
+
+  <!-- O NÁS -->
+  <section class="section" id="o-nas">
+    <div class="wrap about-grid reveal">
+      <div class="about-media"><img src="img/gal-antonin-petra.webp" alt="Antonín a Petra — zakladatelé kavárny Jedním Tahem"></div>
+      <div class="about-copy">
+        <p class="eyebrow">O nás</p>
+        <h2>Místo s jedním tahem</h2>
+        <p>Jsme malá kavárna v areálu Svit ve Zlíně. Vznikli jsme z přesvědčení, že dobrý den začíná u dobré kávy a poctivé snídaně. Vozíme zrno od lokálních pražičů, pečeme ráno čerstvě a sedí se u nás dlouho do odpoledne.</p>
+        <p>Jméno <b>Jedním Tahem</b> je o jednoduchosti — jeden tah, jedna linka, jedno espresso udělané pořádně. Přijď posedět, pracovat nebo si jen dát flat white v klidu.</p>
+        <a href="#menu" class="btn" style="margin-top:10px">Prohlédni nabídku</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIE -->
+  <section class="section" id="galerie">
+    <div class="wrap">
+      <p class="eyebrow reveal" style="display:block;text-align:center;margin-bottom:14px">Galerie</p>
+      <h2 class="section-title reveal" style="margin-bottom:14px">Nahlédni k nám</h2>
+      <p class="center muted reveal" style="max-width:560px;margin:0 auto 46px">Káva, jídlo, prostor a lidé — pár záběrů, jak to u nás vypadá.</p>
+      <div class="gallery reveal">
+        <figure class="ar-tall"><img src="img/gal-prostory.webp" alt="Interiér kavárny s kolem a rostlinami" loading="lazy"><figcaption>Prostor</figcaption></figure>
+        <figure class="ar-tall"><img src="img/gal-kava.webp" alt="Flat white v brandovaném šálku" loading="lazy"><figcaption>Flat white</figcaption></figure>
+        <figure class="ar-sq"><img src="img/gal-latte_art.webp" alt="Latte art" loading="lazy"><figcaption>Latte art</figcaption></figure>
+        <figure class="ar-port"><img src="img/gal-mlynek.webp" alt="Mlýnek a zrnková káva" loading="lazy"><figcaption>Čerstvě namleto</figcaption></figure>
+        <figure class="ar-tall"><img src="img/gal-kavarna.webp" alt="Baristé za barem" loading="lazy"><figcaption>Náš bar</figcaption></figure>
+        <figure class="ar-wide"><img src="img/gal-sladke.webp" alt="Vitrína plná dezertů" loading="lazy"><figcaption>Z vitríny</figcaption></figure>
+        <figure class="ar-tall"><img src="img/gal-chlebicek.webp" alt="Chlebíček s pomazánkou" loading="lazy"><figcaption>Z kuchyně</figcaption></figure>
+        <figure class="ar-port"><img src="img/gal-snidane2.webp" alt="Snídaně a ledové nápoje" loading="lazy"><figcaption>Snídaně</figcaption></figure>
+        <figure class="ar-port"><img src="img/gal-matcha-latte.webp" alt="Matcha latte" loading="lazy"><figcaption>Matcha</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="section" id="menu">
+    <div class="wrap">
+      <h2 class="section-title reveal">Menu</h2>
+      <div class="accordion reveal" id="accordion">
+        <div class="acc-item open">
+          <button class="acc-head">Snídaně<span class="ic"></span></button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="menu-row"><span class="name">Avokádový toast s vejcem<span class="desc">kváskový chléb, ztracené vejce, dukkah</span></span><span class="dots"></span><span class="price">165</span></div>
+            <div class="menu-row"><span class="name">Cinnamon roll<span class="desc">domácí, mázlý smetanovou polevou</span></span><span class="dots"></span><span class="price">79</span></div>
+            <div class="menu-row"><span class="name">Jogurt s granolou<span class="desc">domácí granola, sezónní ovoce, med</span></span><span class="dots"></span><span class="price">119</span></div>
+            <div class="menu-row"><span class="name">Vajíčka podle tebe<span class="desc">míchaná / sázená, pečivo, máslo</span></span><span class="dots"></span><span class="price">99</span></div>
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head">Odpolední menu<span class="ic"></span></button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="menu-row"><span class="name">Quiche dne s listovým salátem</span><span class="dots"></span><span class="price">149</span></div>
+            <div class="menu-row"><span class="name">Polévka dne</span><span class="dots"></span><span class="price">89</span></div>
+            <div class="menu-row"><span class="name">Banana bread</span><span class="dots"></span><span class="price">69</span></div>
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head">Káva &amp; horké nápoje<span class="ic"></span></button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="menu-row"><span class="name">Espresso</span><span class="dots"></span><span class="price">55</span></div>
+            <div class="menu-row"><span class="name">Flat white</span><span class="dots"></span><span class="price">75</span></div>
+            <div class="menu-row"><span class="name">Filtr (V60 / batch)</span><span class="dots"></span><span class="price">79</span></div>
+            <div class="menu-row"><span class="name">Matcha latte</span><span class="dots"></span><span class="price">85</span></div>
+            <div class="menu-row"><span class="name">Horká čokoláda</span><span class="dots"></span><span class="price">79</span></div>
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head">Nealko<span class="ic"></span></button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="menu-row"><span class="name">Domácí limonáda</span><span class="dots"></span><span class="price">65</span></div>
+            <div class="menu-row"><span class="name">Cold brew</span><span class="dots"></span><span class="price">79</span></div>
+            <div class="menu-row"><span class="name">Kombucha</span><span class="dots"></span><span class="price">75</span></div>
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head">Víno &amp; bublinky<span class="ic"></span></button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="menu-row"><span class="name">Sklenka bílého / oranžového</span><span class="dots"></span><span class="price">95</span></div>
+            <div class="menu-row"><span class="name">Prosecco 0,1 l</span><span class="dots"></span><span class="price">89</span></div>
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head">Signature drinky<span class="ic"></span></button>
+          <div class="acc-body"><div class="acc-body-inner">
+            <div class="menu-row"><span class="name">Espresso tonic<span class="desc">tonic, led, citrus, dvojité espresso</span></span><span class="dots"></span><span class="price">99</span></div>
+            <div class="menu-row"><span class="name">Jedním Tahem signature<span class="desc">cold brew, pomeranč, rozmarýn</span></span><span class="dots"></span><span class="price">109</span></div>
+          </div></div>
+        </div>
+      </div>
+      <div class="menu-foot reveal"><a href="#" class="btn">Stáhnout celé menu</a></div>
+    </div>
+  </section>
+
+  <!-- AKTUALITY -->
+  <section class="section" id="novinky">
+    <div class="wrap">
+      <p class="eyebrow reveal" style="display:block;text-align:center;margin-bottom:14px">Aktuality</p>
+      <h2 class="section-title reveal">Co je u nás nového?</h2>
+      <div class="updates reveal">
+        <div class="update">
+          <span class="u-tag">Novinka</span>
+          <div class="u-body">
+            <h4>Pistáciové věnečky a tiramisu ve skle</h4>
+            <p>Nově ve vitríně — domácí věnečky s pistácií a tiramisu ve skle. Klidně i s sebou.</p>
+          </div>
+          <div class="u-media"><img src="img/gal-venecky.webp" alt="Pistáciové věnečky" loading="lazy"></div>
+        </div>
+        <div class="update">
+          <span class="u-tag">Sezóna</span>
+          <div class="u-body">
+            <h4>Letní limonády a cold brew</h4>
+            <p>Po celé léto točíme domácí limonády a cold brew. Dokud je teplo, najdeš je v nabídce.</p>
+          </div>
+          <div class="u-media"><img src="img/gal-udrzitelnost.webp" alt="Nápoj s sebou" loading="lazy"></div>
+        </div>
+        <div class="update">
+          <span class="u-tag">Otevíračka</span>
+          <div class="u-body">
+            <h4>Nově otevřeno i v neděli</h4>
+            <p>Od <time>července</time> máme otevřeno také o víkendu, 9:00–18:00. Stav se na pomalou snídani.</p>
+          </div>
+          <div class="u-media"><img src="img/gal-snidane.webp" alt="Snídaně v kavárně" loading="lazy"></div>
+        </div>
+        <div class="update">
+          <span class="u-tag">Událost</span>
+          <div class="u-body">
+            <h4>Cupping večer — ochutnávka kávy</h4>
+            <p>Každý poslední čtvrtek v měsíci od 18:00. Projdeme tři výběrové kávy, vstup zdarma.</p>
+          </div>
+          <div class="u-media"><img src="img/gal-tiramisu.webp" alt="Ochutnávka u kávy" loading="lazy"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT / KUDY K NÁM -->
+  <section class="section" id="kontakt">
+    <div class="wrap">
+      <p class="eyebrow reveal" style="display:block;text-align:center;margin-bottom:14px">Kontakt</p>
+      <h2 class="section-title reveal" style="margin-bottom:46px">Kudy k nám</h2>
+      <div class="contact reveal">
+        <div class="contact-list">
+          <div>
+            <p class="ci-label">Kde nás najdeš</p>
+            <p class="big">Šedesátá 7015<br>760 01 Zlín</p>
+            <p class="muted">V areálu Svit nedaleko centra Zlína. Pár minut autem i MHD, parkování v okolí.</p>
+          </div>
+          <div>
+            <p class="ci-label">Otevřeno</p>
+            <p><span class="day">Po–Pá</span>&nbsp;&nbsp;8:00–18:00<br><span class="day">So–Ne</span>&nbsp;&nbsp;9:00–18:00</p>
+          </div>
+          <div>
+            <p class="ci-label">Ozvi se</p>
+            <p><a class="link" href="tel:+420732654531">+420 732 654 531</a><br><a class="link" href="mailto:info@jednimtahem.cz">info@jednimtahem.cz</a></p>
+          </div>
+          <div>
+            <p class="ci-label">Sleduj nás</p>
+            <p style="margin-bottom:12px">@jednim_tahem</p>
+            <div class="contact-soc">
+              <a href="https://www.instagram.com/jednim_tahem/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/></svg></a>
+              <a href="https://www.facebook.com/jednimtahem.cafe/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v6h3v-6h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+            </div>
+          </div>
+          <a href="https://maps.google.com/?q=Šedesátá+7015,+760+01+Zlín" target="_blank" rel="noopener" class="btn" style="align-self:flex-start">Otevřít v mapách</a>
+        </div>
+        <div class="contact-map">
+          <iframe title="Mapa — Jedním Tahem, Šedesátá 7015, Zlín" src="https://maps.google.com/maps?q=%C5%A0edes%C3%A1t%C3%A1%207015%2C%20760%2001%20Zl%C3%ADn&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REZERVACE / FORMULÁŘ -->
+  <section class="section" id="rezervace">
+    <div class="wrap">
+      <p class="eyebrow reveal" style="display:block;text-align:center;margin-bottom:14px">Rezervace</p>
+      <h2 class="section-title reveal" style="margin-bottom:14px">Napiš nám / rezervuj stůl</h2>
+      <p class="center muted reveal" style="max-width:560px;margin:0 auto 46px">Na rezervaci vyplň termín, čas a počet osob. Na běžný dotaz stačí jméno, e-mail a zpráva. Ozveme se ti co nejdřív.</p>
+      <form class="form-wrap reveal" id="resForm" novalidate>
+        <div class="form-grid">
+          <div class="field"><label for="f-name">Jméno <span class="req">*</span></label><input id="f-name" name="name" type="text" required placeholder="Tvoje jméno"></div>
+          <div class="field"><label for="f-email">E-mail <span class="req">*</span></label><input id="f-email" name="email" type="email" required placeholder="ty@email.cz"></div>
+          <div class="field"><label for="f-phone">Telefon</label><input id="f-phone" name="phone" type="tel" placeholder="+420 …"></div>
+          <div class="field"><label for="f-people">Počet osob</label><select id="f-people" name="people"><option value="">—</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9 a více</option></select></div>
+          <div class="field"><label for="f-date">Termín</label><input id="f-date" name="date" type="date"></div>
+          <div class="field"><label for="f-time">Čas</label><input id="f-time" name="time" type="time"></div>
+          <div class="field full"><label for="f-msg">Zpráva</label><textarea id="f-msg" name="message" placeholder="Co potřebuješ? (alergie, příležitost, dotaz…)"></textarea></div>
+          <label class="form-consent"><input id="f-consent" type="checkbox" required> Souhlasím se <a href="#">zpracováním osobních údajů</a> pro vyřízení mé poptávky.</label>
+          <div class="form-foot">
+            <button type="submit" class="btn btn--solid">Odeslat poptávku</button>
+            <span class="form-note" id="formNote">Díky! Otevřeli jsme ti e-mail s vyplněnou poptávkou — stačí ho odeslat.</span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="foot-top">
+      <a href="#top" class="foot-brand">
+        <svg><use href="#logo"></use></svg>
+        <span>Jedním Tahem</span>
+      </a>
+      <nav class="foot-nav">
+        <a href="#o-nas">O nás</a>
+        <a href="#galerie">Galerie</a>
+        <a href="#menu">Menu</a>
+        <a href="#novinky">Aktuality</a>
+        <a href="#kontakt">Kontakt</a>
+        <a href="#rezervace">Rezervace</a>
+      </nav>
+      <div class="foot-soc">
+        <a href="https://www.facebook.com/jednimtahem.cafe/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v6h3v-6h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
+        <a href="https://www.instagram.com/jednim_tahem/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/></svg></a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>Šedesátá 7015, 760 01 Zlín · Po–Pá 8–18, So–Ne 9–18</span>
+      <span>© 2026 Jedním Tahem</span>
+    </div>
+  </div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Zpět nahoru" title="Nahoru">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+</button>
+
+<script>
+// header bg + scroll-to-top visibility
+const header=document.getElementById('header');
+const toTop=document.getElementById('toTop');
+addEventListener('scroll',()=>{
+  header.classList.toggle('scrolled',scrollY>40);
+  toTop.classList.toggle('show',scrollY>500);
+},{passive:true});
+toTop.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+
+// menu toggle
+const toggle=document.getElementById('navToggle');
+const label=document.getElementById('navLabel');
+toggle.addEventListener('click',()=>{
+  const open=document.body.classList.toggle('menu-open');
+  toggle.setAttribute('aria-expanded',open);
+  label.textContent=open?'Zavřít':'Menu';
+});
+document.querySelectorAll('#overlay a').forEach(a=>a.addEventListener('click',()=>{
+  document.body.classList.remove('menu-open');toggle.setAttribute('aria-expanded',false);label.textContent='Menu';
+}));
+
+// accordion
+document.querySelectorAll('.acc-head').forEach(h=>{
+  h.addEventListener('click',()=>{
+    const item=h.parentElement;
+    const body=h.nextElementSibling;
+    const open=item.classList.toggle('open');
+    body.style.maxHeight=open?body.scrollHeight+'px':0;
+  });
+});
+// init open one
+document.querySelectorAll('.acc-item.open .acc-body').forEach(b=>b.style.maxHeight=b.scrollHeight+'px');
+
+// reservation / contact form -> opens prefilled e-mail (no backend)
+const resForm=document.getElementById('resForm');
+if(resForm){
+  resForm.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    if(!resForm.reportValidity())return;
+    const val=(id)=>(document.getElementById(id)?.value||'').trim();
+    const name=val('f-name'),email=val('f-email'),phone=val('f-phone'),people=val('f-people'),date=val('f-date'),time=val('f-time'),msg=val('f-msg');
+    const lines=[`Jméno: ${name}`,`E-mail: ${email}`];
+    if(phone)lines.push(`Telefon: ${phone}`);
+    if(people)lines.push(`Počet osob: ${people}`);
+    if(date)lines.push(`Termín: ${date}`);
+    if(time)lines.push(`Čas: ${time}`);
+    if(msg)lines.push('',`Zpráva:`,msg);
+    const subject=(date||time||people)?`Rezervace — ${name}`:`Poptávka z webu — ${name}`;
+    window.location.href=`mailto:info@jednimtahem.cz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+    document.getElementById('formNote').classList.add('show');
+  });
+}
+
+// reveal
+const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
