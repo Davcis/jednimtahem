@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jedním Tahem — nabídka a předobjednávky</title>
+<meta name="description" content="Předobjednávky catering od kavárny Jedním Tahem ve Zlíně — koláče, cheesecake, slané štrúdly, batch brew.">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#000000;
+  --panel:#0c0c0c;
+  --panel-2:#141414;
+  --panel-3:#1a1a1a;
+  --line:#272727;
+  --white:#ffffff;
+  --grey:#a3a3a3;
+  --grey-2:#7e7e7e;
+  --grey-3:#b4b4b4;
+  --accent:#d8ae84;
+  --accent-soft:rgba(216,174,132,.14);
+  --maxw:860px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --head:"Montserrat","Helvetica Neue",Arial,sans-serif;
+  --body:"Poppins",Helvetica,Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--black);color:var(--white);font-family:var(--body);font-weight:300;line-height:1.7;font-size:16px;-webkit-font-smoothing:antialiased;min-height:100vh}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+::selection{background:var(--accent);color:#000}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3,h4,.head{font-family:var(--head);font-weight:800;text-transform:uppercase;line-height:1.08;letter-spacing:.01em}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+/* ---- top bar ---- */
+.topbar-in{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:32px 20px 0;max-width:var(--maxw);margin:0 auto}
+.brand h1{font-size:26px;letter-spacing:.005em}
+@media(min-width:620px){.brand h1{font-size:32px}}
+.brand .status{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;color:var(--grey-3);font-weight:300;text-transform:none}
+.brand .status .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.brand .back{display:inline-flex;align-items:center;gap:8px;margin:0 0 20px;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:11px;color:#fff;border:1px solid var(--line);padding:10px 16px;transition:background .25s,color .25s,border-color .25s}
+.brand .back:hover{background:#fff;color:#000;border-color:#fff}
+.logo-badge{width:54px;height:54px;flex:none;border:1.5px solid var(--line);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.logo-badge svg{width:30px;height:30px;color:#fff}
+
+/* ---- stepper ---- */
+.stepper{display:flex;gap:6px;max-width:var(--maxw);margin:0 auto;padding:16px 20px 0}
+.stepper .st{flex:1;display:flex;flex-direction:column;gap:7px;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:10px;color:var(--grey-2);transition:color .3s}
+.stepper .st .bar{height:3px;background:var(--line);transition:background .35s var(--ease)}
+.stepper .st.done{color:var(--grey-3)}
+.stepper .st.done .bar{background:#4a4a4a}
+.stepper .st.active{color:var(--accent)}
+.stepper .st.active .bar{background:var(--accent)}
+@media(min-width:620px){.stepper .st{font-size:11px}}
+
+/* ---- step sections ---- */
+main.wrap{padding:48px 20px 52px}
+#step1{padding-bottom:70px}
+.step{display:none}
+.step.show{display:block;animation:fade .45s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.section-label{font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.14em;font-size:13px;color:#fff;margin:4px 0 20px}
+.step-title{font-size:26px;margin-bottom:6px}
+@media(min-width:620px){.step-title{font-size:34px}}
+.step-sub{color:var(--grey-3);font-size:15px;margin-bottom:28px}
+
+/* ---- product cards ---- */
+.catalog{display:flex;flex-direction:column;gap:12px}
+.prod{display:grid;grid-template-columns:72px 1fr auto;gap:16px;align-items:start;background:var(--panel);border:1px solid var(--line);padding:16px;transition:border-color .3s,background .3s}
+.prod.in-cart{border-color:var(--accent);background:#0f0d0a}
+@media(min-width:620px){.prod{grid-template-columns:96px 1fr auto;gap:20px;padding:18px}}
+.prod-img{width:72px;height:72px;overflow:hidden;background:var(--panel-2);flex:none}
+@media(min-width:620px){.prod-img{width:96px;height:96px}}
+.prod-img img{width:100%;height:100%;object-fit:cover}
+.prod-body h3{font-family:var(--head);font-weight:700;text-transform:none;font-size:15px;line-height:1.3;letter-spacing:0;margin-bottom:6px}
+@media(min-width:620px){.prod-body h3{font-size:16px}}
+.prod-body p{color:var(--grey);font-size:12.5px;line-height:1.55;font-weight:300;display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.prod-side{display:flex;flex-direction:column;align-items:flex-end;gap:10px;min-width:92px}
+.prod-price{font-family:var(--head);font-weight:700;color:var(--accent);font-size:17px;white-space:nowrap}
+.qty{display:flex;align-items:center;gap:0;border:1px solid var(--line)}
+.qty button{width:34px;height:34px;background:var(--panel-2);border:none;color:#fff;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s}
+.qty button:hover{background:#fff;color:#000}
+.qty .n{min-width:34px;text-align:center;font-size:14px;font-weight:500;font-family:var(--head)}
+.add-btn{width:38px;height:38px;background:#fff;color:#000;border:none;font-size:22px;line-height:1;display:flex;align-items:center;justify-content:center;transition:background .25s,transform .15s}
+.add-btn:hover{background:var(--accent)}
+.add-btn:active{transform:scale(.92)}
+
+/* ---- cart bottom bar ---- */
+.cartbar{position:fixed;left:0;right:0;bottom:0;z-index:60;background:#0a0a0a;border-top:1px solid var(--line);transform:translateY(120%);transition:transform .4s var(--ease);box-shadow:0 -14px 40px rgba(0,0,0,.6)}
+.cartbar.show{transform:none}
+.cartbar-in{max-width:var(--maxw);margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:16px}
+.cartbar .sum{flex:1;line-height:1.3}
+.cartbar .sum b{display:block;font-family:var(--head);font-weight:700;font-size:20px}
+.cartbar .sum span{font-size:12.5px;color:var(--grey-3)}
+
+/* ---- buttons ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:14px;padding:16px 30px;border:1px solid var(--white);background:var(--white);color:#000;transition:background .3s var(--ease),border-color .3s,color .3s,transform .15s}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:#000}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.35;pointer-events:none}
+.btn--ghost{background:transparent;color:#fff}
+.btn--ghost:hover{background:#fff;color:#000;border-color:#fff}
+.btn--block{width:100%}
+.step-foot{display:flex;gap:12px;margin-top:30px}
+.step-foot .btn--ghost{flex:none;padding-left:26px;padding-right:26px}
+.step-foot .grow{flex:1}
+
+/* ---- option cards (delivery / payment) ---- */
+.opt-group{margin-bottom:30px}
+.opt-group>.lbl{font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--grey-3);margin-bottom:14px}
+.opt{display:flex;align-items:center;gap:14px;background:var(--panel);border:1px solid var(--line);padding:18px;cursor:pointer;transition:border-color .25s,background .25s;margin-bottom:10px}
+.opt:hover{border-color:#3a3a3a}
+.opt.sel{border-color:var(--accent);background:#0f0d0a}
+.opt .ic{width:40px;height:40px;flex:none;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;color:var(--accent)}
+.opt .ic svg{width:20px;height:20px}
+.opt .txt{flex:1}
+.opt .txt b{display:block;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.02em;font-size:14px}
+.opt .txt span{font-size:13px;color:var(--grey-3)}
+.opt .radio{width:22px;height:22px;flex:none;border-radius:50%;border:1.5px solid #555;position:relative;transition:border-color .25s}
+.opt.sel .radio{border-color:var(--accent)}
+.opt.sel .radio::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--accent)}
+
+/* ---- form ---- */
+.form-grid{display:grid;grid-template-columns:1fr;gap:18px;color-scheme:dark}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:11px;color:var(--grey-3)}
+.field label .req{color:var(--accent)}
+.field input,.field textarea{background:var(--panel);border:1px solid var(--line);color:#fff;padding:14px 16px;font-family:var(--body);font-size:15px;width:100%;transition:border-color .25s,background .25s}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--accent);background:#000}
+.field input::placeholder,.field textarea::placeholder{color:#5e5e5e}
+.field textarea{resize:vertical;min-height:110px}
+.check{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;color:var(--grey-3);cursor:pointer;line-height:1.55}
+.check input{flex:none;margin-top:3px;width:17px;height:17px;accent-color:var(--accent)}
+
+/* ---- summary ---- */
+.summary{margin-top:34px;border-top:1px solid var(--line);padding-top:24px}
+.summary .lbl{font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--grey-3);margin-bottom:16px}
+.sum-row{display:flex;justify-content:space-between;gap:16px;padding:9px 0;font-size:14.5px;border-bottom:1px dashed #262626}
+.sum-row .q{color:var(--accent);font-weight:500;font-family:var(--head);margin-right:6px}
+.sum-meta{display:flex;justify-content:space-between;gap:16px;padding:10px 0;font-size:13.5px;color:var(--grey-3);border-bottom:1px dashed #262626}
+.sum-meta b{color:#fff;font-weight:500}
+.sum-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:18px;margin-top:4px}
+.sum-total span{font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:15px}
+.sum-total b{font-family:var(--head);font-weight:800;font-size:26px;color:var(--accent)}
+.fineprint{font-size:12.5px;color:var(--grey-2);margin-top:18px}
+.fineprint a{color:#fff;text-decoration:underline}
+
+/* ---- confirmation ---- */
+.done-wrap{text-align:center;max-width:520px;margin:30px auto 0}
+.done-badge{width:96px;height:96px;margin:0 auto 26px;border:1.5px solid var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--accent);animation:pop .5s var(--ease)}
+@keyframes pop{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.done-badge svg{width:46px;height:46px}
+.done-wrap h2{font-size:30px;margin-bottom:16px}
+.done-wrap p{color:var(--grey-3);font-size:16px;margin-bottom:10px}
+.done-wrap .note{font-size:13.5px;color:var(--grey-2);margin:22px 0 30px}
+
+.mock-flag{max-width:var(--maxw);margin:0 auto;padding:10px 20px}
+.mock-flag span{display:inline-block;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.1em;font-size:10px;color:var(--grey-2);border:1px dashed #333;padding:5px 11px}
+
+.foot-note{text-align:center;color:var(--grey-2);font-size:12px;padding:30px 20px 10px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 1000 1000">
+    <path d="M506.003,140l214.123,214.123l0,427.877l-431.126,0l0,-431l217.003,-211Z" fill="none" stroke="currentColor" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M289,353l427.126,0l-427.126,429l427.126,0l-427.126,-429Z" fill="none" stroke="currentColor" stroke-width="34" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+</svg>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <a class="back" href="index.html">← zpět na web</a>
+      <h1 id="topTitle">jedním tahem — nabídka</h1>
+      <span class="status"><span class="dot"></span> předobjednávky otevřeny</span>
+    </div>
+    <div class="logo-badge"><svg><use href="#logo"></use></svg></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- STEP 1 — KATALOG -->
+  <section class="step show" id="step1">
+    <p class="section-label">Catering</p>
+    <div class="catalog" id="catalog"></div>
+  </section>
+
+  <!-- STEP 2 — DORUČENÍ A PLATBA -->
+  <section class="step" id="step2">
+    <h2 class="step-title">Doprava a platba</h2>
+    <p class="step-sub">Vyber si, jak a kdy si objednávku převezmeš.</p>
+
+    <div class="opt-group">
+      <p class="lbl">Zvolte způsob doručení</p>
+      <div class="opt sel" data-delivery="Vidíme se v tahu">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/></svg></span>
+        <span class="txt"><b>Vidíme se v tahu</b><span>Osobní odběr v kavárně — Šedesátá 7015, Zlín</span></span>
+        <span class="radio"></span>
+      </div>
+    </div>
+
+    <div class="opt-group">
+      <p class="lbl">Zvolte platební metodu</p>
+      <div class="opt sel" data-payment="Při předání">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></span>
+        <span class="txt"><b>Při předání</b><span>Hotově nebo kartou na místě</span></span>
+        <span class="radio"></span>
+      </div>
+    </div>
+
+    <div class="step-foot">
+      <button class="btn btn--ghost" data-goto="1">Zpět</button>
+      <button class="btn grow" data-goto="3">Pokračovat</button>
+    </div>
+  </section>
+
+  <!-- STEP 3 — OSOBNÍ ÚDAJE -->
+  <section class="step" id="step3">
+    <h2 class="step-title">Osobní údaje</h2>
+    <p class="step-sub">Ať víme, komu objednávku chystáme a kam se ozvat.</p>
+
+    <form class="form-grid" id="orderForm" novalidate>
+      <div class="field"><label for="o-name">Jméno a příjmení <span class="req">*</span></label><input id="o-name" type="text" required placeholder="Tvoje jméno"></div>
+      <div class="field"><label for="o-phone">Telefonní číslo <span class="req">*</span></label><input id="o-phone" type="tel" required placeholder="+420"></div>
+      <div class="field"><label for="o-email">E-mail <span class="req">*</span></label><input id="o-email" type="email" required placeholder="@"></div>
+      <div class="field"><label for="o-note">Poznámka k objednávce</label><textarea id="o-note" placeholder="Upřesni prosím, kdy si přeješ objednávku vyzvednout (u cheesecaku i příchuť)."></textarea></div>
+      <label class="check"><input id="o-save" type="checkbox"> Uložit vyplněné údaje pro příště.</label>
+    </form>
+
+    <div class="summary">
+      <p class="lbl">Souhrn objednávky</p>
+      <div id="sumItems"></div>
+      <div class="sum-meta"><span>Způsob doručení</span><b id="sumDelivery">—</b></div>
+      <div class="sum-meta"><span>Způsob platby</span><b id="sumPayment">—</b></div>
+      <div class="sum-total"><span>Cena celkem</span><b id="sumTotal">0 Kč</b></div>
+      <p class="fineprint">Odesláním objednávky souhlasíš se <a href="#">zpracováním osobních údajů</a> a <a href="#">obchodními podmínkami</a>.</p>
+    </div>
+
+    <div class="step-foot">
+      <button class="btn btn--ghost" data-goto="2">Zpět</button>
+      <button class="btn grow" id="finishBtn">Dokončit objednávku</button>
+    </div>
+  </section>
+
+  <!-- STEP 4 — HOTOVO -->
+  <section class="step" id="step4">
+    <div class="done-wrap">
+      <div class="done-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></div>
+      <h2>Děkujeme!</h2>
+      <p>Objednávku jsme přijali a ozveme se ti e-mailem s finální domluvou termínu.</p>
+      <p class="note">Číslo poptávky <b id="orderNo" style="color:#fff">—</b> · do schránky dorazí i souhrn.</p>
+      <a class="btn btn--block" href="index.html">Zpět na web</a>
+    </div>
+  </section>
+
+</main>
+
+<!-- cart bottom bar -->
+<div class="cartbar" id="cartbar">
+  <div class="cartbar-in">
+    <div class="sum"><b id="barTotal">0 Kč</b><span id="barCount">0 položek</span></div>
+    <button class="btn" data-goto="2" id="toCheckout">Pokračovat</button>
+  </div>
+</div>
+
+<p class="foot-note">Jedním Tahem · předobjednávky catering ve Zlíně</p>
+
+<script>
+const PRODUCTS=[
+  {id:'batchbrew',name:'batch brew — 1 litr',price:330,img:'img/order-batchbrew.webp',desc:'Skvělá možnost pro setkání u dobré kávy mimo prostředí kavárny. Půjčíme vám ho i s várnicí a kelímky. 5 porcí po 200 ml kávy. Nutno objednat nejpozději 3 pracovní dny před vyzvednutím. Finální domluvu si potvrdíme v e-mailu.'},
+  {id:'strudl-spenat',name:'slaný štrúdl — se špenátem a sýrem',price:690,img:'img/order-strudl.webp',desc:'Krabička se slaným štrúdlem (10 ks — střední porce). Nutno objednat nejpozději 3 pracovní dny před vyzvednutím. Finální domluvu si potvrdíme v e-mailu.'},
+  {id:'strudl-zeli',name:'slaný štrúdl — se zelím a slaninou',price:690,img:'img/order-strudl.webp',desc:'Krabička se slaným štrúdlem (10 ks — střední porce). Nutno objednat nejpozději 3 pracovní dny před vyzvednutím. Finální domluvu si potvrdíme v e-mailu.'},
+  {id:'cheesecake',name:'celý cheesecake (14 dílů) *příchuť uveďte do poznámky',price:1900,img:'img/order-cheesecake.webp',desc:'Celý cheesecake s sebou na narozeninovou oslavu nebo k slavnostnímu mlsání. Poleva z bílé čokolády, mléčné čokolády, nebo pistácie, ozdobíme ovocem. Objednat min 3 pracovní dny předem, domluvu potvrdíme e-mailem.'},
+  {id:'bedna-mix',name:'bedna koláčů *mix 20 ks (malina, borůvka, meruňka, švestka)',price:1180,img:'img/order-kolace.webp',desc:'Krabice domácích kynutých koláčů střední velikosti (20 ks, 1 ks = 59 Kč). Zapůjčíme i krabici, ideální pro 10 osob. Objednejte min 3 pracovní dny předem, vyzvednutí v otevírací době kavárny.'},
+  {id:'bedna-malina',name:'bedna koláčů *malinové (20 ks)',price:1180,img:'img/order-kolace.webp',desc:'Krabice domácích kynutých koláčů s malinami (20 ks, 1 ks = 59 Kč). Zapůjčíme i krabici, ideální pro 10 osob. Objednejte min 3 pracovní dny předem.'},
+  {id:'bedna-boruvka',name:'bedna koláčů *borůvkové (20 ks)',price:1180,img:'img/order-kolace.webp',desc:'Krabice domácích kynutých koláčů s borůvkami (20 ks, 1 ks = 59 Kč). Zapůjčíme i krabici, ideální pro 10 osob. Objednejte min 3 pracovní dny předem.'},
+  {id:'bedna-svestka',name:'bedna koláčů *švestkové (20 ks)',price:1180,img:'img/order-kolace.webp',desc:'Krabice domácích kynutých koláčů se švestkami (20 ks, 1 ks = 59 Kč). Zapůjčíme i krabici, ideální pro 10 osob. Objednejte min 3 pracovní dny předem.'},
+  {id:'bedna-merunka',name:'bedna koláčů *meruňkové (20 ks)',price:1180,img:'img/order-kolace.webp',desc:'Krabice domácích kynutých koláčů s meruňkami (20 ks, 1 ks = 59 Kč). Zapůjčíme i krabici, ideální pro 10 osob. Objednejte min 3 pracovní dny předem.'},
+  {id:'croissant',name:'krabička pistáciových croissantů (4 ks)',price:380,img:'img/order-croissant.webp',desc:'Krabička se 4 ks našich domácích pistáciových croissantů. Skvěle doplní každý sweet bar. Objednat min 3 pracovní dny předem, domluvu potvrdíme e-mailem.'}
+];
+
+const cart={};
+let delivery='Vidíme se v tahu', payment='Při předání';
+const czk=(n)=>n.toLocaleString('cs-CZ')+' Kč';
+
+/* ----- catalog render ----- */
+const catalogEl=document.getElementById('catalog');
+catalogEl.innerHTML=PRODUCTS.map(p=>`
+  <article class="prod" id="prod-${p.id}">
+    <div class="prod-img"><img src="${p.img}" alt="" loading="lazy"></div>
+    <div class="prod-body"><h3>${p.name}</h3><p>${p.desc}</p></div>
+    <div class="prod-side">
+      <span class="prod-price">${czk(p.price)}</span>
+      <div class="ctrl" data-id="${p.id}"></div>
+    </div>
+  </article>`).join('');
+
+function renderCtrl(id){
+  const el=document.querySelector(`.ctrl[data-id="${id}"]`);
+  const q=cart[id]||0;
+  if(q>0){
+    el.innerHTML=`<div class="qty"><button aria-label="Ubrat" data-act="dec">−</button><span class="n">${q}</span><button aria-label="Přidat" data-act="inc">+</button></div>`;
+  }else{
+    el.innerHTML=`<button class="add-btn" aria-label="Přidat do košíku" data-act="inc">+</button>`;
+  }
+  document.getElementById('prod-'+id).classList.toggle('in-cart',q>0);
+}
+
+catalogEl.addEventListener('click',(e)=>{
+  const b=e.target.closest('[data-act]'); if(!b)return;
+  const id=b.closest('.ctrl').dataset.id;
+  cart[id]=(cart[id]||0)+(b.dataset.act==='inc'?1:-1);
+  if(cart[id]<=0)delete cart[id];
+  renderCtrl(id); renderCart();
+});
+
+/* ----- totals / cart bar ----- */
+function totals(){
+  let count=0,sum=0;
+  for(const id in cart){const p=PRODUCTS.find(x=>x.id===id);count+=cart[id];sum+=p.price*cart[id];}
+  return {count,sum};
+}
+function plural(n){return n===1?'položka':(n>=2&&n<=4?'položky':'položek');}
+function renderCart(){
+  const {count,sum}=totals();
+  document.getElementById('barTotal').textContent=czk(sum);
+  document.getElementById('barCount').textContent=count+' '+plural(count);
+  document.getElementById('cartbar').classList.toggle('show',count>0 && current===1);
+}
+
+/* ----- steps ----- */
+let current=1;
+function goto(step){
+  if(step===2 && totals().count===0)return;
+  if(step===3){ buildSummary(); }
+  current=step;
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('show'));
+  document.getElementById('step'+step).classList.add('show');
+  document.querySelectorAll('#stepper .st').forEach(st=>{
+    const n=+st.dataset.step;
+    st.classList.toggle('active',n===step);
+    st.classList.toggle('done',n<step);
+  });
+  document.getElementById('topTitle').textContent = step===1?'jedním tahem — nabídka':'jedním tahem — objednávka';
+  renderCart();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.addEventListener('click',(e)=>{
+  const g=e.target.closest('[data-goto]'); if(!g)return;
+  goto(+g.dataset.goto);
+});
+
+/* ----- option selection ----- */
+document.querySelectorAll('#step2 .opt-group').forEach(group=>{
+  group.addEventListener('click',(e)=>{
+    const opt=e.target.closest('.opt'); if(!opt)return;
+    group.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+    opt.classList.add('sel');
+    if(opt.dataset.delivery)delivery=opt.dataset.delivery;
+    if(opt.dataset.payment)payment=opt.dataset.payment;
+  });
+});
+
+/* ----- summary (step 3) ----- */
+function buildSummary(){
+  const rows=Object.keys(cart).map(id=>{
+    const p=PRODUCTS.find(x=>x.id===id);
+    return `<div class="sum-row"><span><span class="q">${cart[id]}×</span>${p.name}</span><b>${czk(p.price*cart[id])}</b></div>`;
+  }).join('');
+  document.getElementById('sumItems').innerHTML=rows;
+  document.getElementById('sumDelivery').textContent=delivery;
+  document.getElementById('sumPayment').textContent=payment;
+  document.getElementById('sumTotal').textContent=czk(totals().sum);
+}
+
+/* ----- finish (no backend yet) ----- */
+document.getElementById('finishBtn').addEventListener('click',()=>{
+  const f=document.getElementById('orderForm');
+  if(!f.reportValidity())return;
+  document.getElementById('orderNo').textContent='JT-'+Math.floor(1000+Math.random()*9000);
+  // TODO: napojit na backend (Sebou / vlastní) — zde se objednávka reálně odešle
+  goto(4);
+});
+
+PRODUCTS.forEach(p=>renderCtrl(p.id));
+renderCart();
+</script>
+</body>
+</html>
