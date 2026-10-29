@@ -7,6 +7,17 @@
 <meta name="description" content="Jedním Tahem — kavárna ve Zlíně. Výběrová káva, domácí snídaně a místo, kde se dobře sedí.">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <meta name="theme-color" content="#000000">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Jedním Tahem">
+<meta property="og:title" content="Jedním Tahem — kavárna ve Zlíně">
+<meta property="og:description" content="Výběrová káva, domácí snídaně a catering s sebou. Kavárna v areálu Svit ve Zlíně.">
+<meta property="og:url" content="https://jednimtahem.cz/">
+<meta property="og:image" content="https://jednimtahem.cz/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="cs_CZ">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://jednimtahem.cz/img/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&family=Montserrat:wght@500;600;700;800;900&display=swap" rel="stylesheet">
@@ -91,19 +102,22 @@ body.menu-open .nav-toggle .bars i:nth-child(2){opacity:0}
 body.menu-open .nav-toggle .bars i:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
 /* desktop nav */
-.desktop-nav{display:none}
+.desktop-nav,.nav-order{display:none}
 @media(min-width:1040px){
-  .nav-pill{width:auto;justify-content:flex-start;gap:34px;padding:8px 8px 8px 26px}
-  .desktop-nav{display:flex;align-items:center;gap:26px}
+  /* full-width bar: logo left | links centred | Objednat right */
+  .nav-pill{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:28px;padding:12px 12px 12px 30px}
+  .desktop-nav{display:flex;align-items:center;gap:30px}
+  .nav-order{display:inline-flex;justify-self:end}
   .nav-toggle{display:none}
 }
+@media(min-width:1240px){.desktop-nav{gap:42px}}
 .desktop-nav a{position:relative;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:13px;color:#fff;padding:4px 0;transition:color .25s}
-.desktop-nav a:not(.nav-order):hover{color:var(--lime)}
-.desktop-nav a:not(.nav-order)::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--lime);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
-.desktop-nav a:not(.nav-order):hover::after{transform:scaleX(1)}
-.desktop-nav a.nav-order{background:var(--lime);color:#000;padding:11px 24px;transition:background .25s,transform .15s}
-.desktop-nav a.nav-order:hover{background:#fff}
-.desktop-nav a.nav-order:active{transform:translateY(1px)}
+.desktop-nav a:hover{color:var(--lime)}
+.desktop-nav a::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:2px;background:var(--lime);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.desktop-nav a:hover::after{transform:scaleX(1)}
+.nav-order{align-items:center;font-family:var(--head);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:13px;background:#fff;color:#000;padding:13px 28px;transition:background .25s,transform .15s}
+.nav-order:hover{background:var(--lime)}
+.nav-order:active{transform:translateY(1px)}
 
 /* overlay menu */
 .overlay{
@@ -234,6 +248,8 @@ body.menu-open .overlay{opacity:1;visibility:visible}
 .u-body h4{font-size:19px;letter-spacing:.02em;margin-bottom:6px}
 .u-body p{color:var(--grey-3);font-size:15px;margin:0}
 .u-body p time{color:#fff;font-weight:500}
+.u-link{display:inline-block;margin-top:12px;font-family:var(--head);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:12px;color:var(--lime);border-bottom:1px solid rgba(216,174,132,.4);padding-bottom:2px;transition:color .25s,border-color .25s}
+.u-link:hover{color:#fff;border-color:#fff}
 .u-media{overflow:hidden;background:var(--panel-2);aspect-ratio:3/2}
 .u-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
 .update:hover .u-media img{transform:scale(1.05)}
@@ -377,8 +393,8 @@ body.menu-open .overlay{opacity:1;visibility:visible}
       <a href="#novinky">Aktuality</a>
       <a href="#kontakt">Kontakt</a>
       <a href="#rezervace">Rezervace</a>
-      <a href="objednavka.html" class="nav-order">Objednat</a>
     </nav>
+    <a href="objednavka.html" class="nav-order">Objednat</a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
       <span id="navLabel">Menu</span>
       <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -518,36 +534,40 @@ body.menu-open .overlay{opacity:1;visibility:visible}
       <h2 class="section-title reveal">Co je u nás nového?</h2>
       <div class="updates reveal">
         <div class="update">
-          <span class="u-tag">Novinka</span>
-          <div class="u-body">
-            <h4>Pistáciové věnečky a tiramisu ve skle</h4>
-            <p>Nově ve vitríně — domácí věnečky s pistácií a tiramisu ve skle. Klidně i s sebou.</p>
-          </div>
-          <div class="u-media"><img src="img/gal-venecky.webp" alt="Pistáciové věnečky" loading="lazy"></div>
-        </div>
-        <div class="update">
-          <span class="u-tag">Sezóna</span>
-          <div class="u-body">
-            <h4>Letní limonády a cold brew</h4>
-            <p>Po celé léto točíme domácí limonády a cold brew. Dokud je teplo, najdeš je v nabídce.</p>
-          </div>
-          <div class="u-media"><img src="img/gal-udrzitelnost.webp" alt="Nápoj s sebou" loading="lazy"></div>
-        </div>
-        <div class="update">
-          <span class="u-tag">Otevíračka</span>
-          <div class="u-body">
-            <h4>Nově otevřeno i v neděli</h4>
-            <p>Od <time>července</time> máme otevřeno také o víkendu, 9:00–18:00. Stav se na pomalou snídani.</p>
-          </div>
-          <div class="u-media"><img src="img/gal-snidane.webp" alt="Snídaně v kavárně" loading="lazy"></div>
-        </div>
-        <div class="update">
           <span class="u-tag">Událost</span>
           <div class="u-body">
-            <h4>Cupping večer — ochutnávka kávy</h4>
-            <p>Každý poslední čtvrtek v měsíci od 18:00. Projdeme tři výběrové kávy, vstup zdarma.</p>
+            <h4>Slavíme 7. narozeniny</h4>
+            <p>V neděli <time datetime="2026-11-01">1. 11.</time> od 9:00 do 12:00. Od 10:00 zahraje zlínská kapela Moonday (soul &amp; pop), pro nejmenší chystáme deskovky a narozeninové omalovánky. A ještě jedno překvapení navíc.</p>
+            <a class="u-link" href="https://www.instagram.com/jednim_tahem/p/DeZS-5gioDI/" target="_blank" rel="noopener">Víc na Instagramu →</a>
           </div>
-          <div class="u-media"><img src="img/gal-tiramisu.webp" alt="Ochutnávka u kávy" loading="lazy"></div>
+          <div class="u-media"><img src="img/gal-kavarna.webp" alt="Baristé za barem kavárny Jedním Tahem" loading="lazy"></div>
+        </div>
+        <div class="update">
+          <span class="u-tag">Workshop</span>
+          <div class="u-body">
+            <h4>Prohoď si role s baristou</h4>
+            <p>Na narozeninách tě provedeme přípravou latte art a odvážlivci se můžou zapojit do amatérské soutěže v srdíčkách do cappuccina. <time datetime="2026-11-01">1. 11.</time>, 9:00–12:00, zdarma. Malování hrníčků s Je to hlína je už vyprodané.</p>
+            <a class="u-link" href="https://www.instagram.com/jednim_tahem/p/DeMaNyeCucO/" target="_blank" rel="noopener">Víc na Instagramu →</a>
+          </div>
+          <div class="u-media"><img src="img/gal-latte_art.webp" alt="Latte art v šálku" loading="lazy"></div>
+        </div>
+        <div class="update">
+          <span class="u-tag">Soutěž</span>
+          <div class="u-body">
+            <h4>Vyhraj kafe a croissant pro dva</h4>
+            <p>Na Instagramu označ do komentáře, koho bys vzal na narozeninové kafe. Losujeme <time datetime="2026-10-31">31. 10.</time> o poukázky v hodnotě 500 Kč.</p>
+            <a class="u-link" href="https://www.instagram.com/jednim_tahem/p/Dei8iYLGwv6/" target="_blank" rel="noopener">Zapojit se →</a>
+          </div>
+          <div class="u-media"><img src="img/gal-croissant.webp" alt="Pistáciový croissant a limonáda" loading="lazy"></div>
+        </div>
+        <div class="update">
+          <span class="u-tag">Novinka</span>
+          <div class="u-body">
+            <h4>Catering nově online</h4>
+            <p>Chystáš akci? Croissanty, koláče i štrůdly si teď objednáš z pohodlí kanclu — stačí zadat množství a termín. Vyzvednutí v tahu v otevírací době, objednávej aspoň 3 pracovní dny předem.</p>
+            <a class="u-link" href="objednavka.html">Objednat catering →</a>
+          </div>
+          <div class="u-media"><img src="img/order-kolace.webp" alt="Bedna domácích kynutých koláčů" loading="lazy"></div>
         </div>
       </div>
     </div>
