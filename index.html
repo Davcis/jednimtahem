@@ -154,6 +154,7 @@ body.menu-open .overlay{opacity:1;visibility:visible}
 .hero-lead{margin-top:18px;max-width:430px;color:#d9d9d9;font-size:16px}
 .hero-cta{display:flex;flex-wrap:wrap;gap:14px;justify-content:flex-start;margin-top:34px}
 .scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;font-family:var(--head);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--grey-3);display:flex;flex-direction:column;align-items:center;gap:8px}
+@media(max-width:1039px){.scroll-hint{display:none}}
 .scroll-hint .line{width:1px;height:38px;background:linear-gradient(#fff,transparent);animation:drop 1.8s var(--ease) infinite}
 @keyframes drop{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.1%{transform-origin:bottom}100%{transform:scaleY(.2);transform-origin:bottom}}
 
@@ -312,6 +313,21 @@ body.menu-open .overlay{opacity:1;visibility:visible}
 .contact a.link:hover{border-color:#fff}
 .contact-map{min-height:280px;border:1px solid var(--line);overflow:hidden;background:var(--panel-2)}
 .contact-map iframe{width:100%;height:100%;min-height:280px;border:0;filter:grayscale(1) invert(.92) contrast(.85) brightness(.95)}
+/* merged contact + reservation: info & map left, form right */
+.contact-info{display:flex;flex-direction:column;gap:32px}
+.contact-btns{display:flex;flex-wrap:wrap;gap:12px}
+@media(min-width:860px) and (max-width:1179px){.contact-btns .btn{padding:15px 28px}}
+.contact > .contact-map{grid-column:1/-1;height:320px}
+.contact > .contact-map iframe{height:100%}
+@media(min-width:860px){.contact > .contact-map{height:420px;margin-top:8px}}
+.contact-form{scroll-margin-top:110px}
+@media(min-width:860px){.contact-form{border-left:1px solid var(--line);padding-left:56px;margin-left:-1px}}
+.contact-form h3{font-size:22px;margin-bottom:10px}
+@media(min-width:720px){.contact-form h3{font-size:26px}}
+.contact-form>.muted{margin-bottom:28px;font-size:15px}
+.contact-form .form-wrap{max-width:none;margin:0}
+.contact-form .form-grid{grid-template-columns:1fr}
+@media(min-width:620px) and (max-width:859px),(min-width:1180px){.contact-form .form-grid{grid-template-columns:1fr 1fr}}
 
 /* ---------- sustainability banner ---------- */
 .banner{position:relative;text-align:center;overflow:hidden}
@@ -388,11 +404,10 @@ body.menu-open .overlay{opacity:1;visibility:visible}
     </a>
     <nav class="desktop-nav" aria-label="Hlavní navigace">
       <a href="#o-nas">O nás</a>
-      <a href="#galerie">Galerie</a>
       <a href="#menu">Menu</a>
       <a href="#novinky">Aktuality</a>
+      <a href="#galerie">Galerie</a>
       <a href="#kontakt">Kontakt</a>
-      <a href="#rezervace">Rezervace</a>
     </nav>
     <a href="objednavka.html" class="nav-order">Objednat</a>
     <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
@@ -404,11 +419,10 @@ body.menu-open .overlay{opacity:1;visibility:visible}
 
 <nav class="overlay" id="overlay" aria-label="Hlavní navigace">
   <a href="#o-nas">O nás</a>
-  <a href="#galerie">Galerie</a>
   <a href="#menu">Menu</a>
   <a href="#novinky">Aktuality</a>
+  <a href="#galerie">Galerie</a>
   <a href="#kontakt">Kontakt</a>
-  <a href="#rezervace">Rezervace</a>
   <a href="objednavka.html" class="ov-order">Objednat&nbsp;s&nbsp;sebou</a>
 </nav>
 
@@ -444,26 +458,6 @@ body.menu-open .overlay{opacity:1;visibility:visible}
         <p>Jsme malá kavárna v areálu Svit ve Zlíně. Vznikli jsme z přesvědčení, že dobrý den začíná u dobré kávy a poctivé snídaně. Vozíme zrno od lokálních pražičů, pečeme ráno čerstvě a sedí se u nás dlouho do odpoledne.</p>
         <p>Jméno <b>Jedním Tahem</b> je o jednoduchosti — jeden tah, jedna linka, jedno espresso udělané pořádně. Přijď posedět, pracovat nebo si jen dát flat white v klidu.</p>
         <a href="#menu" class="btn" style="margin-top:10px">Prohlédni nabídku</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- GALERIE -->
-  <section class="section" id="galerie">
-    <div class="wrap">
-      <p class="eyebrow reveal" style="display:block;text-align:center;margin-bottom:14px">Galerie</p>
-      <h2 class="section-title reveal" style="margin-bottom:14px">Nahlédni k nám</h2>
-      <p class="center muted reveal" style="max-width:560px;margin:0 auto 46px">Káva, jídlo, prostor a lidé — pár záběrů, jak to u nás vypadá.</p>
-      <div class="gallery reveal">
-        <figure class="ar-tall"><img src="img/gal-prostory.webp" alt="Interiér kavárny s kolem a rostlinami" loading="lazy"><figcaption>Prostor</figcaption></figure>
-        <figure class="ar-tall"><img src="img/gal-kava.webp" alt="Flat white v brandovaném šálku" loading="lazy"><figcaption>Flat white</figcaption></figure>
-        <figure class="ar-sq"><img src="img/gal-latte_art.webp" alt="Latte art" loading="lazy"><figcaption>Latte art</figcaption></figure>
-        <figure class="ar-port"><img src="img/gal-mlynek.webp" alt="Mlýnek a zrnková káva" loading="lazy"><figcaption>Čerstvě namleto</figcaption></figure>
-        <figure class="ar-tall"><img src="img/gal-kavarna.webp" alt="Baristé za barem" loading="lazy"><figcaption>Náš bar</figcaption></figure>
-        <figure class="ar-wide"><img src="img/gal-sladke.webp" alt="Vitrína plná dezertů" loading="lazy"><figcaption>Z vitríny</figcaption></figure>
-        <figure class="ar-tall"><img src="img/gal-chlebicek.webp" alt="Chlebíček s pomazánkou" loading="lazy"><figcaption>Z kuchyně</figcaption></figure>
-        <figure class="ar-port"><img src="img/gal-snidane2.webp" alt="Snídaně a ledové nápoje" loading="lazy"><figcaption>Snídaně</figcaption></figure>
-        <figure class="ar-port"><img src="img/gal-matcha-latte.webp" alt="Matcha latte" loading="lazy"><figcaption>Matcha</figcaption></figure>
       </div>
     </div>
   </section>
@@ -573,12 +567,33 @@ body.menu-open .overlay{opacity:1;visibility:visible}
     </div>
   </section>
 
-  <!-- KONTAKT / KUDY K NÁM -->
+  <!-- GALERIE -->
+  <section class="section" id="galerie">
+    <div class="wrap">
+      <p class="eyebrow reveal" style="display:block;text-align:center;margin-bottom:14px">Galerie</p>
+      <h2 class="section-title reveal" style="margin-bottom:14px">Nahlédni k nám</h2>
+      <p class="center muted reveal" style="max-width:560px;margin:0 auto 46px">Káva, jídlo, prostor a lidé — pár záběrů, jak to u nás vypadá.</p>
+      <div class="gallery reveal">
+        <figure class="ar-tall"><img src="img/gal-prostory.webp" alt="Interiér kavárny s kolem a rostlinami" loading="lazy"><figcaption>Prostor</figcaption></figure>
+        <figure class="ar-tall"><img src="img/gal-kava.webp" alt="Flat white v brandovaném šálku" loading="lazy"><figcaption>Flat white</figcaption></figure>
+        <figure class="ar-sq"><img src="img/gal-latte_art.webp" alt="Latte art" loading="lazy"><figcaption>Latte art</figcaption></figure>
+        <figure class="ar-port"><img src="img/gal-mlynek.webp" alt="Mlýnek a zrnková káva" loading="lazy"><figcaption>Čerstvě namleto</figcaption></figure>
+        <figure class="ar-tall"><img src="img/gal-kavarna.webp" alt="Baristé za barem" loading="lazy"><figcaption>Náš bar</figcaption></figure>
+        <figure class="ar-wide"><img src="img/gal-sladke.webp" alt="Vitrína plná dezertů" loading="lazy"><figcaption>Z vitríny</figcaption></figure>
+        <figure class="ar-tall"><img src="img/gal-chlebicek.webp" alt="Chlebíček s pomazánkou" loading="lazy"><figcaption>Z kuchyně</figcaption></figure>
+        <figure class="ar-port"><img src="img/gal-snidane2.webp" alt="Snídaně a ledové nápoje" loading="lazy"><figcaption>Snídaně</figcaption></figure>
+        <figure class="ar-port"><img src="img/gal-matcha-latte.webp" alt="Matcha latte" loading="lazy"><figcaption>Matcha</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT & REZERVACE -->
   <section class="section" id="kontakt">
     <div class="wrap">
-      <p class="eyebrow reveal" style="display:block;text-align:center;margin-bottom:14px">Kontakt</p>
+      <p class="eyebrow reveal" style="display:block;text-align:center;margin-bottom:14px">Kontakt &amp; rezervace</p>
       <h2 class="section-title reveal" style="margin-bottom:46px">Kudy k nám</h2>
       <div class="contact reveal">
+        <div class="contact-info">
         <div class="contact-list">
           <div>
             <p class="ci-label">Kde nás najdeš</p>
@@ -601,22 +616,16 @@ body.menu-open .overlay{opacity:1;visibility:visible}
               <a href="https://www.facebook.com/jednimtahem.cafe/" target="_blank" rel="noopener" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 9h3V6h-3c-2.2 0-4 1.8-4 4v2H7v3h3v6h3v-6h3l1-3h-4v-2c0-.6.4-1 1-1z"/></svg></a>
             </div>
           </div>
-          <a href="https://maps.google.com/?q=Šedesátá+7015,+760+01+Zlín" target="_blank" rel="noopener" class="btn" style="align-self:flex-start">Otevřít v mapách</a>
+          <div class="contact-btns">
+            <a href="objednavka.html" class="btn btn--solid">Objednat s sebou</a>
+            <a href="https://maps.google.com/?q=Šedesátá+7015,+760+01+Zlín" target="_blank" rel="noopener" class="btn">Otevřít v mapách</a>
+          </div>
         </div>
-        <div class="contact-map">
-          <iframe title="Mapa — Jedním Tahem, Šedesátá 7015, Zlín" src="https://maps.google.com/maps?q=%C5%A0edes%C3%A1t%C3%A1%207015%2C%20760%2001%20Zl%C3%ADn&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- REZERVACE / FORMULÁŘ -->
-  <section class="section" id="rezervace">
-    <div class="wrap">
-      <p class="eyebrow reveal" style="display:block;text-align:center;margin-bottom:14px">Rezervace</p>
-      <h2 class="section-title reveal" style="margin-bottom:14px">Napiš nám / rezervuj stůl</h2>
-      <p class="center muted reveal" style="max-width:560px;margin:0 auto 46px">Na rezervaci vyplň termín, čas a počet osob. Na běžný dotaz stačí jméno, e-mail a zpráva. Ozveme se ti co nejdřív.</p>
-      <form class="form-wrap reveal" id="resForm" novalidate>
+        <div class="contact-form" id="rezervace">
+          <h3>Napiš nám / rezervuj stůl</h3>
+          <p class="muted">Na rezervaci vyplň termín, čas a počet osob. Na běžný dotaz stačí jméno, e-mail a zpráva. Ozveme se ti co nejdřív.</p>
+      <form class="form-wrap" id="resForm" novalidate>
         <div class="form-grid">
           <div class="field"><label for="f-name">Jméno <span class="req">*</span></label><input id="f-name" name="name" type="text" required placeholder="Tvoje jméno"></div>
           <div class="field"><label for="f-email">E-mail <span class="req">*</span></label><input id="f-email" name="email" type="email" required placeholder="ty@email.cz"></div>
@@ -632,6 +641,11 @@ body.menu-open .overlay{opacity:1;visibility:visible}
           </div>
         </div>
       </form>
+        </div>
+        <div class="contact-map">
+          <iframe title="Mapa — Jedním Tahem, Šedesátá 7015, Zlín" src="https://maps.google.com/maps?q=%C5%A0edes%C3%A1t%C3%A1%207015%2C%20760%2001%20Zl%C3%ADn&t=&z=16&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -646,11 +660,10 @@ body.menu-open .overlay{opacity:1;visibility:visible}
       </a>
       <nav class="foot-nav">
         <a href="#o-nas">O nás</a>
-        <a href="#galerie">Galerie</a>
         <a href="#menu">Menu</a>
         <a href="#novinky">Aktuality</a>
+        <a href="#galerie">Galerie</a>
         <a href="#kontakt">Kontakt</a>
-        <a href="#rezervace">Rezervace</a>
         <a href="objednavka.html">Objednat</a>
       </nav>
       <div class="foot-soc">
