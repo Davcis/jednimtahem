@@ -147,6 +147,7 @@ main.wrap{padding:48px 20px 52px}
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--accent);background:#000}
 .field input::placeholder,.field textarea::placeholder{color:#5e5e5e}
 .field textarea{resize:vertical;min-height:110px}
+@media(max-width:619px){.field input,.field textarea{font-size:16px}}  /* prevents iOS zoom on focus */
 .check{display:flex;gap:11px;align-items:flex-start;font-size:13.5px;color:var(--grey-3);cursor:pointer;line-height:1.55}
 .check input{flex:none;margin-top:3px;width:17px;height:17px;accent-color:var(--accent)}
 
